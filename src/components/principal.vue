@@ -159,7 +159,7 @@ export default {
     },
     goNuevoPedido(){
       console.log('Hola');
-      this.$router.push("/crearpedido").catch(() => {});
+      this.$router.push("/restaurante").catch(() => {});
     }
   },
   mounted() {

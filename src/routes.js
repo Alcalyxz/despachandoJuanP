@@ -9,7 +9,7 @@ import puente from "./components/puente"
 import menus from "./components/menus"
 import puenteproductos from "./components/puenteproductos"
 import crearpedido from "./components/crearPedido"
-
+import restaurante from "./components/restaurante"
 
 
 export const routes = [
@@ -24,6 +24,7 @@ export const routes = [
     {path: '/puente', component:puente},
     {path: '/menus', component:menus},
     {path: '/puenteproductos', component:puenteproductos},
-    {path: '/crearpedido', component:crearpedido}
+    {path: '/crearpedido', component:crearpedido},
+    {path: '/restaurante', component:restaurante}
     
 ]
