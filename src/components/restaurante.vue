@@ -38,23 +38,22 @@
         " placeholder="Buscar producto">
       </form>
     </div>
-    <div class="featured_products">
-      <h3>Destacados</h3>
-      <div class="products">
+    <div class="featured_products" v-for="carta in cartaActual" :key="carta.index" >
+      <h3>{{ carta.name }}</h3>
+
+      <!--CARD -->
+      <div class="products" v-for="item in carta.products" :key="item.index">
         <div class="featured_product_card">
           <figure>
             <img src="../assets/images/bowl_cerdo.jpeg" alt="">
           </figure>  
           <div class="featured_product_card_information">
-            <h4>Bowl de Cerdo</h4>
-            <p>Delicioso y saludable bowl de cerdo con verduras</p>
+            <h4>{{item.name}}</h4>
+            <p>{{item.descripcion}}</p>
             <div class="card_price">
-              <h5>$15.000</h5>
+              <h5>${{item.price}}</h5>
             </div>
             <div class="botones">
-              <v-btn>
-                
-              </v-btn>
             </div>
           </div>
         </div>
@@ -65,9 +64,67 @@
 </template>
 
 <script>
-export default {
-  name: "restaurante",
 
+import { mapState, mapActions } from "vuex";
+//import services from "../services/despachandoServices";
+
+export default {
+
+  
+  name: "restaurante",
+  data: () => ({
+    restaurante: [],
+    itemsCompletos: [],
+    items: []
+  }),
+
+  methods: {
+    ...mapActions(["obtenerMenu"]),
+    cargarMenus() {
+      console.log("Llegue AQUI!")
+      console.log(this.$store.state.cartaActual)
+      this.items = [];
+      this.itemsCompletos = [];
+
+      for (var i = 0; i < this.$store.state.cartaActual.length; i++) {
+        this.itemsCompletos[i] = this.$store.state.cartaActual[i];
+        this.items[i] = this.$store.state.cartaActual[i].name;
+      }
+
+      for (var j = 0; j < this.$store.state.cartaActual.length; j++) {
+        for (
+          var k = 0;
+          k < this.$store.state.cartaActual[j].products.length;
+          k++
+        ) {
+          let objeto = {
+            name: this.$store.state.cartaActual[j].products[k].name,
+            id: this.$store.state.cartaActual[j].products[k].idproducto,
+            price: this.$store.state.cartaActual[j].products[k].price,
+            descripcion: this.$store.state.cartaActual[j].products[k]
+              .descripcion,
+          };
+          this.itemsCompletos.push(objeto);
+        }
+
+        this.items[j] = this.$store.state.cartaActual[j].name;
+      }
+
+      console.log('MENU COMPLETO:' + this.itemsCompletos[0].name)
+    },
+  },
+
+  mounted(){
+    this.restaurante = this.$store.state.restauranteActual;
+  },
+  created() {
+    this.cargarMenus();
+    this.nit = this.$store.state.restauranteActual.nit;
+    this.obtenerMenu();
+  },
+  computed: {
+    ...mapState(["cartaActual"]),
+  },
 };
 
 

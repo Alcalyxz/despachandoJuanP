@@ -95,7 +95,7 @@
                           <v-icon>mdi-delete</v-icon>
                         </v-btn>
 
-                        <v-btn @click="goNuevoPedido">
+                        <v-btn @click="goNuevoPedido(restaurant)">
                           <span>Pedido</span>
                           <v-icon>mdi-plus</v-icon>
                         </v-btn>
@@ -157,8 +157,8 @@ export default {
       this.$store.state.restauranteActual = restaurante;
       this.$router.push("/menus").catch(() => {});
     },
-    goNuevoPedido(){
-      console.log('Hola');
+    goNuevoPedido(restaurante){
+      this.$store.state.restauranteActual = restaurante;
       this.$router.push("/restaurante").catch(() => {});
     }
   },
