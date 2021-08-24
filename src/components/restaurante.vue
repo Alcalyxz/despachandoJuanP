@@ -49,7 +49,7 @@
         <div class="products" v-for="item in carta.products" :key="item.index">
           <div class="featured_product_card">
             <figure>
-              <img src="../assets/images/bowl_cerdo.jpeg" alt="" />
+              <img v-bind:src="item.imagen" alt="" />
             </figure>
             <div class="featured_product_card_information">
               <h4>{{ item.name }}</h4>

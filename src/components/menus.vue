@@ -365,13 +365,10 @@ export default {
             idProducto.idcarta,
             url
           );
-          this.$router.push("/principal").catch(() => {});
+          //this.$refs.form.validate();
+          this.dialogAdd = !this.dialogAdd;
+          this.$router.push("/puenteproductos").catch(() => {});
         });
-
-      this.$refs.form.validate();
-
-      this.dialogAdd = !this.dialogAdd;
-      this.$router.push("/puenteproductos").catch(() => {});
     },
     agregarProducto() {
       console.log(this.$store.state.cartaActual);

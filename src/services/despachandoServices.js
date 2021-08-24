@@ -209,12 +209,13 @@ export default {
   },
 
 
-  async addProduct(precio, nombre, descripcion,idcarta) {
+  async addProduct(precio, nombre, descripcion,idcarta,imagen) {
     let usuario = {
       nombre,
       precio,
       descripcion,
-      idcarta
+      idcarta,
+      imagen
     }
     console.log(usuario);
     await axios.post('https://despachando.herokuapp.com/addProduct', JSON.stringify(usuario), {
