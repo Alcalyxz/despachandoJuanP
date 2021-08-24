@@ -83,6 +83,15 @@
               :rules="[(v) => !!v || 'Item is required']"
               required
             ></v-text-field>
+
+            <v-file-input
+              v-model="imagen"
+              :rules="[(v) => !!v || 'Item is required']"
+              accept="image/*"
+              label="Imagen Restaurante"
+            >
+            </v-file-input>
+
             <v-text-field
               v-model="priceAdd"
               label="Precio"
@@ -244,6 +253,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import services from "../services/despachandoServices";
+import firebase from "firebase";
 
 export default {
   name: "menus",
@@ -278,7 +288,8 @@ export default {
     idDelete: "",
     items: [],
     itemsCompletos: [],
-    menuCompleto: []
+    menuCompleto: [],
+    imagen: null,
   }),
   methods: {
     ...mapActions(["obtenerMenu"]),
@@ -335,12 +346,30 @@ export default {
         (element) => element.name == this.tipo
       );
       console.log(idProducto);
-      await services.addProduct(
-        this.priceAdd,
-        this.nameAdd,
-        this.descripcionAdd,
-        idProducto.idcarta
-      );
+
+      //Conexion con FireStorage para almacenar la imagen
+      const ref = firebase.storage().ref();
+      const nombree = new Date() + "-" + this.imagen.name;
+      const metaData = {
+        contentType: this.imagen.type,
+      };
+      const task = ref.child(nombree).put(this.imagen, metaData);
+      task
+        .then((snapshot) => snapshot.ref.getDownloadURL())
+        .then(async (url) => {
+          //Una vez tenemos el URL llamamos el método de añadir restaurante
+          await services.addProduct(
+            this.priceAdd,
+            this.nameAdd,
+            this.descripcionAdd,
+            idProducto.idcarta,
+            url
+          );
+          this.$router.push("/principal").catch(() => {});
+        });
+
+      this.$refs.form.validate();
+
       this.dialogAdd = !this.dialogAdd;
       this.$router.push("/puenteproductos").catch(() => {});
     },
@@ -376,7 +405,7 @@ export default {
         this.items[j] = this.$store.state.cartaActual[j].name;
       }
 
-      console.log('MENU COMPLETO:' + this.menuCompleto)
+      console.log("MENU COMPLETO:" + this.menuCompleto);
     },
   },
   computed: {
