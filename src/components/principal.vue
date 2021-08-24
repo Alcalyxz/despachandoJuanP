@@ -6,7 +6,7 @@
       rel="stylesheet"
     />
     <div class="mensajeError" v-if="!this.$store.state.log">
-      <img src="..\assets\images\pageNotFound.jpg" alt="" width="500px" />
+      <img src="" alt="" width="500px" />
       <h3>¡Por Favor Inicia Sesión!</h3>
     </div>
 
