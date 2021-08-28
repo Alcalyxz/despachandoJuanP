@@ -59,22 +59,23 @@
                 <div class="card_price">
                   <h5>${{ item.price }}</h5>
                 </div>
+                <div>
+                  <v-row>
+                    <v-col>
+                      <input class="cantidad" type="number" />
+                    </v-col>
+                    <v-col>
+                      <div class="overflow-hidden">
+                        <div class="boton-adicionar">
+                          <v-bottom>
+                            <span><h2>Adicionar</h2></span>
+                          </v-bottom>
+                        </div>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </div>
               </div>
-              <v-row>
-                <v-col>
-                  <input class="cantidad" type="number" />
-                </v-col>
-                <v-col>
-                  <div class="overflow-hidden">
-                    <v-bottom-navigation>
-                      <v-btn>
-                        <span>Agregar</span>
-                        <v-icon>mdi-plus</v-icon>
-                      </v-btn>
-                    </v-bottom-navigation>
-                  </div>
-                </v-col>
-              </v-row>
             </div>
           </div>
         </div>
@@ -120,7 +121,7 @@ export default {
             price: this.$store.state.cartaActual[j].products[k].price,
             descripcion: this.$store.state.cartaActual[j].products[k]
               .descripcion,
-              cantidad: 0
+            cantidad: 0,
           };
           this.itemsCompletos.push(objeto);
         }
@@ -147,7 +148,7 @@ export default {
 </script>
 
 <style scoped>
-.cantidad{
+.cantidad {
   width: 50px;
 }
 .delivery_section {
@@ -209,7 +210,6 @@ export default {
   align-items: center;
   margin-right: 25px;
 }
-
 .min_delivery_information img {
   width: 1.5vw;
   margin-right: 0.5em;
@@ -260,6 +260,11 @@ export default {
   display: flex;
   align-items: center;
 }
+.cantidad {
+  border: rgb(199, 198, 198) 1px solid;
+  border-radius: 7px;
+  height: 30px;
+}
 .menu_prducts {
   display: flex;
 }
@@ -272,6 +277,11 @@ export default {
 .menu_product_card img {
   width: 100%;
   height: 100%;
+}
+.actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 p {
   margin-bottom: 0;
@@ -291,7 +301,7 @@ h4 {
   margin-bottom: 1.5em;
 }
 h5 {
-  color: rgb(19, 170, 19);
+  
   font-size: 1.2em;
   font-weight: 400;
 }
@@ -307,5 +317,14 @@ hr {
   border-left: 1px solid hsla(200, 10%, 50%, 100);
   height: 3vh;
   width: 1px;
+}
+.boton-adicionar {
+  background-color: #e51e2b;
+  color: white;
+  font-size: 9px;
+  border: red 1px solid;
+  border-radius: 7px;
+  padding: 5px;
+  text-align: center;
 }
 </style>
