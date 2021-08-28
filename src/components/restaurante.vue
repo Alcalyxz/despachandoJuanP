@@ -217,12 +217,15 @@ export default {
 }
 .featured_products {
   display: flex;
+  flex-wrap: wrap;
+  
 }
 .featured_product_card {
   border: 1px solid rgb(219, 219, 219);
   border-radius: 6px;
   box-shadow: 1px 1px 1px 1px rgba(231, 231, 231, 0.61);
-  margin-right: 2em;
+  width: 300px;
+  margin:  0 40px;
 }
 .featured_product_card img {
   border-radius: 5px 5px 0 0;
