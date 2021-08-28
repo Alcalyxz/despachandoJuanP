@@ -54,10 +54,27 @@
             <div class="featured_product_card_information">
               <h4>{{ item.name }}</h4>
               <p>{{ item.descripcion }}</p>
-              <div class="card_price">
-                <h5>${{ item.price }}</h5>
+
+              <div class="actions">
+                <div class="card_price">
+                  <h5>${{ item.price }}</h5>
+                </div>
               </div>
-              <div class="botones"></div>
+              <v-row>
+                <v-col>
+                  <input class="cantidad" type="number" />
+                </v-col>
+                <v-col>
+                  <div class="overflow-hidden">
+                    <v-bottom-navigation>
+                      <v-btn>
+                        <span>Agregar</span>
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
+                    </v-bottom-navigation>
+                  </div>
+                </v-col>
+              </v-row>
             </div>
           </div>
         </div>
@@ -103,6 +120,7 @@ export default {
             price: this.$store.state.cartaActual[j].products[k].price,
             descripcion: this.$store.state.cartaActual[j].products[k]
               .descripcion,
+              cantidad: 0
           };
           this.itemsCompletos.push(objeto);
         }
@@ -129,6 +147,9 @@ export default {
 </script>
 
 <style scoped>
+.cantidad{
+  width: 50px;
+}
 .delivery_section {
   margin: 0 7em;
 }
@@ -218,14 +239,13 @@ export default {
 .featured_products {
   display: flex;
   flex-wrap: wrap;
-  
 }
 .featured_product_card {
   border: 1px solid rgb(219, 219, 219);
   border-radius: 6px;
   box-shadow: 1px 1px 1px 1px rgba(231, 231, 231, 0.61);
   width: 300px;
-  margin:  0 40px;
+  margin: 0 40px;
 }
 .featured_product_card img {
   border-radius: 5px 5px 0 0;
