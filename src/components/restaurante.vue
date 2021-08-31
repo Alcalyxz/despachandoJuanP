@@ -1,5 +1,12 @@
 <template>
   <div class="delivery_section">
+    <v-dialog v-model="openCart">
+      <v-card>
+        <v-card-title>¿MANUU!!!?</v-card-title>
+        
+      </v-card>
+    </v-dialog>
+
     <div class="principal_image">
       <figure>
         <img src="../assets/images/principal_restaurant_image.jpeg" alt="" />
@@ -29,6 +36,16 @@
               <p><strong>Pedido mínimo $5.000</strong></p>
             </div>
           </div>
+          <div class="overflow-hidden">
+            <v-bottom-navigation>
+              <v-btn @click="openWindowCart">
+                <img width="40px" src="../assets/images/carros.png" alt="" />
+              </v-btn>
+            </v-bottom-navigation>
+          </div>
+          <div>
+            <p>{{ cantidad }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -42,7 +59,7 @@
         />
       </form>
     </div>
-    <div v-for="carta in cartaActual" :key="carta.index">
+    <div v-for="carta in cartas" :key="carta.index">
       <h3>{{ carta.name }}</h3>
       <!--CARD -->
       <div class="featured_products">
@@ -64,14 +81,27 @@
                 <div>
                   <v-row>
                     <v-col>
-                      <input class="cantidad" type="number" />
+                      <input
+                        v-model="item.cantidad"
+                        class="cantidad"
+                        type="number"
+                      />
                     </v-col>
                     <v-col>
                       <div class="overflow-hidden">
                         <div class="boton-adicionar">
-                          <v-bottom>
-                            <span><h2>Adicionar</h2></span>
-                          </v-bottom>
+                          <button
+                            @click="
+                              addCarrito(
+                                item.idproducto,
+                                item.price,
+                                item.name,
+                                item.cantidad
+                              )
+                            "
+                          >
+                            Adicionar
+                          </button>
                         </div>
                       </div>
                     </v-col>
@@ -94,53 +124,44 @@ export default {
   name: "restaurante",
   data: () => ({
     restaurante: [],
-    itemsCompletos: [],
     items: [],
+    cartas: [],
+    pedido: [],
+    cantidad: 0,
+    openCart: false,
   }),
 
   methods: {
     ...mapActions(["obtenerMenu"]),
-    cargarMenus() {
-      console.log("Llegue AQUI!");
-      console.log(this.$store.state.cartaActual);
-      this.items = [];
-      this.itemsCompletos = [];
-
-      for (var i = 0; i < this.$store.state.cartaActual.length; i++) {
-        this.itemsCompletos[i] = this.$store.state.cartaActual[i];
-        this.items[i] = this.$store.state.cartaActual[i].name;
-      }
-
-      for (var j = 0; j < this.$store.state.cartaActual.length; j++) {
-        for (
-          var k = 0;
-          k < this.$store.state.cartaActual[j].products.length;
-          k++
-        ) {
-          let objeto = {
-            name: this.$store.state.cartaActual[j].products[k].name,
-            id: this.$store.state.cartaActual[j].products[k].idproducto,
-            price: this.$store.state.cartaActual[j].products[k].price,
-            descripcion: this.$store.state.cartaActual[j].products[k]
-              .descripcion,
-            cantidad: 0,
-          };
-          this.itemsCompletos.push(objeto);
-        }
-
-        this.items[j] = this.$store.state.cartaActual[j].name;
-      }
-
-      console.log("MENU COMPLETO:" + this.itemsCompletos[0].name);
+    addCarrito(id, precio, name, cantidad) {
+      let producto = {
+        idproducto: id,
+        precio: precio,
+        nombreProducto: name,
+        cantidad: cantidad,
+      };
+      this.pedido.push(producto);
+      console.log(this.pedido);
+      this.cantidad++;
+    },
+    openWindowCart() {
+      this.openCart = !this.openCart;
     },
   },
 
   mounted() {
     this.restaurante = this.$store.state.restauranteActual;
+    this.cartas = this.$store.state.cartaActual;
+
+    for (var i = 0; i < this.cartas.length; i++) {
+      for (var j = 0; j < this.cartas[i].products.length; j++) {
+        this.cartas[i].products[j].cantidad = 0;
+      }
+    }
   },
   created() {
-    this.cargarMenus();
     this.nit = this.$store.state.restauranteActual.nit;
+
     this.obtenerMenu();
   },
   computed: {

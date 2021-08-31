@@ -451,7 +451,6 @@ thead {
 tr:nth-child(even) {
   background-color: #f0c4162a;
 }
-.
  th:nth-child(1){
   
   background-color: black;
