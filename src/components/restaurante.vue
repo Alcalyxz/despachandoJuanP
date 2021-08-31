@@ -1,9 +1,39 @@
 <template>
   <div class="delivery_section">
+    <!--Este es el formulario-->
+
     <v-dialog v-model="openCart">
       <v-card>
-        <v-card-title>¿MANUU!!!?</v-card-title>
-        
+        <div class="section4">
+          <form action="/action_page.php">
+            <h3>Resumen del pedido</h3>
+            <label for="fname">Nombre:</label><br />
+            <input type="email" id="fname" name="fname" value="" /><br />
+            <label for="fname">Apellido:</label><br />
+            <input type="email" id="fname" name="fname" value="" /><br />
+            <label for="fname">Dirección:</label><br />
+            <input type="email" id="fname" name="fname" value="" /><br />
+            <label for="fname">Barrio:</label><br />
+            <input type="email" id="fname" name="fname" value="" /><br />
+            <label for="fname">Método de pago:</label><br />
+            <input type="email" id="fname" name="fname" value="" /><br />
+          </form>
+          <table class="resumen-productos">
+            <tr>
+              <th>Prooducto</th>
+              <th>Cantida</th>
+              <th>Precio</th>
+            </tr>
+            <tr>
+              <td>hamburguesa</td>
+              <td>2</td>
+              <td>$14.500</td>
+            </tr>
+            
+          </table>
+
+          <button class="boton-pagar">Finalizar compra</button>
+        </div>
       </v-card>
     </v-dialog>
 
@@ -22,20 +52,8 @@
         <div class="information_restaurant">
           <div class="restaurant_name">
             <h1>Restaurant name</h1>
-            <button><img src="../assets/images/star.png" alt="" /></button>
-            <p><strong>4,5</strong></p>
           </div>
-          <div class="more_information_restaurant">
-            <button><strong>Ver más</strong></button>
-            <hr />
-            <div class="min_delivery_information">
-              <img
-                src="../assets/images/money-symbol.png"
-                alt="simbolo de pesos"
-              />
-              <p><strong>Pedido mínimo $5.000</strong></p>
-            </div>
-          </div>
+
           <div class="overflow-hidden">
             <v-bottom-navigation>
               <v-btn @click="openWindowCart">
@@ -171,6 +189,44 @@ export default {
 </script>
 
 <style scoped>
+.section4 {
+  margin: 10%;
+  align-items: center;
+  border-radius: 20px;
+}
+
+input[type="text"]:focus {
+  background-color: #ffd52c46;
+  border: #ffd52c 2px solid;
+  border-radius: 10px;
+}
+
+input[type="email"] {
+  width: 70%;
+  padding: 10px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid rgb(212, 212, 212);
+  border-radius: 10px;
+  outline: none;
+}
+input[type="email"]:focus {
+  background-color: #ffd52c46;
+  border: #ffd52c 2px solid;
+  border-radius: 10px;
+}
+
+.boton-pagar {
+  align-items: flex-end;
+  padding: 2px 10px;
+  background-color: #ffd52c;
+  border: white solid 1px;
+  height: 3.5em;
+  border-radius: 10px;
+}
+.resumen-productos table th{
+  margin: 30px;
+}
 .cantidad {
   width: 50px;
 }
