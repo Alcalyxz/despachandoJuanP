@@ -147,7 +147,7 @@
       <table class="content-table">
         <thead>
           <tr>
-            <th COLSPAN="4">
+            <th class="titulo" COLSPAN="4">
               {{ carta.name }}
             </th>
           </tr>
@@ -163,7 +163,7 @@
             <td>${{ entrada.price }}</td>
             <td>{{ entrada.name }}</td>
             <td>
-              {{ entrada.descripcion }}
+              <div class="descrition_menu">{{ entrada.descripcion }}</div>
             </td>
             <td>
               <img
@@ -418,6 +418,12 @@ export default {
 </script>
 
 <style scoped>
+.descrition_menu{
+  max-width: 500px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .formularioEditar {
   margin-right: 100px;
   margin-left: 100px;
@@ -445,9 +451,14 @@ thead {
 tr:nth-child(even) {
   background-color: #f0c4162a;
 }
+.
+ th:nth-child(1){
+  
+  background-color: black;
+}
 th {
   color: white;
-  padding: 1% 3%;
+  padding: 1%;
   font-weight: bold;
 }
 td {
@@ -462,6 +473,7 @@ table tr:hover {
 }
 .tipoProductos {
   background-color: rgba(255, 255, 255, 0.288);
+  text-align: left;
 }
 
 .agregarProducto {

@@ -53,7 +53,9 @@
             </figure>
             <div class="featured_product_card_information">
               <h4>{{ item.name }}</h4>
-              <p>{{ item.descripcion }}</p>
+              <p class="featured_product_card_information_description">
+                {{ item.descripcion }}
+              </p>
 
               <div class="actions">
                 <div class="card_price">
@@ -278,7 +280,13 @@ export default {
   width: 100%;
   height: 100%;
 }
-.actions{
+.featured_product_card_information_description {
+  width: 250px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.actions {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -301,7 +309,6 @@ h4 {
   margin-bottom: 1.5em;
 }
 h5 {
-  
   font-size: 1.2em;
   font-weight: 400;
 }
