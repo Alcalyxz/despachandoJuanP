@@ -3,10 +3,14 @@
     <!--Este es el formulario-->
 
     <v-dialog v-model="openCart">
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
       <v-card>
+
         <div class="section4">
-          <form action="/action_page.php">
-            <h3>Resumen del pedido</h3>
+          <form action="/action_page.php" class="formulario">
+            <h3 class="resumen">Resumen del pedido</h3>
             <label for="fname">Nombre:</label><br />
             <input type="email" id="fname" name="fname" value="" /><br />
             <label for="fname">Apellido:</label><br />
@@ -18,10 +22,15 @@
             <label for="fname">Método de pago:</label><br />
             <input type="email" id="fname" name="fname" value="" /><br />
           </form>
-          <table class="resumen-productos">
+          <table id="customers">
             <tr>
-              <th>Prooducto</th>
-              <th>Cantida</th>
+              <th class="inicial-pedido" COLSPAN="3">
+                Tu pedido
+              </th>
+            </tr>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
               <th>Precio</th>
             </tr>
             <tr>
@@ -29,10 +38,23 @@
               <td>2</td>
               <td>$14.500</td>
             </tr>
-            
+            <tr>
+              <td>hamburguesa</td>
+              <td>2</td>
+              <td>$14.500</td>
+            </tr>
+            <tr>
+              <td>hamburguesa</td>
+              <td>2</td>
+              <td>$14.500</td>
+            </tr>
           </table>
+<div class="">
 
+          <button class="boton-finalizar">Cancelar compra</button>
           <button class="boton-pagar">Finalizar compra</button>
+  
+</div>
         </div>
       </v-card>
     </v-dialog>
@@ -62,7 +84,7 @@
             </v-bottom-navigation>
           </div>
           <div>
-            <p>{{ cantidad }}</p>
+            <p class="numero-productos">{{ cantidad }}</p>
           </div>
         </div>
       </div>
@@ -109,6 +131,7 @@
                       <div class="overflow-hidden">
                         <div class="boton-adicionar">
                           <button
+                            class="boton-de-adicionar"
                             @click="
                               addCarrito(
                                 item.idproducto,
@@ -190,7 +213,6 @@ export default {
 
 <style scoped>
 .section4 {
-  margin: 10%;
   align-items: center;
   border-radius: 20px;
 }
@@ -202,9 +224,9 @@ input[type="text"]:focus {
 }
 
 input[type="email"] {
-  width: 70%;
+  width: 100%;
   padding: 10px 20px;
-  margin: 8px 0;
+  margin: 8px;
   box-sizing: border-box;
   border: 2px solid rgb(212, 212, 212);
   border-radius: 10px;
@@ -219,12 +241,22 @@ input[type="email"]:focus {
 .boton-pagar {
   align-items: flex-end;
   padding: 2px 10px;
+  margin: 2em;
   background-color: #ffd52c;
   border: white solid 1px;
-  height: 3.5em;
+  height: 2.5em;
   border-radius: 10px;
 }
-.resumen-productos table th{
+.boton-finalizar{
+  align-items: flex-end;
+  padding: 2px 10px;
+  margin: 2em 0 0 0;
+  background-color: #ffd52c;
+  border: white solid 1px;
+  height:2.5em;
+  border-radius: 10px;
+}
+.resumen-productos table th {
   margin: 30px;
 }
 .cantidad {
@@ -301,6 +333,10 @@ input[type="email"]:focus {
   align-items: center;
   padding: 0 20px;
   margin: 2em 0;
+}
+.resumen{
+  height: 50px;
+  padding: 60px 0 ;
 }
 .search_bar img {
   align-items: center;
@@ -405,10 +441,52 @@ hr {
 .boton-adicionar {
   background-color: #e51e2b;
   color: white;
-  font-size: 9px;
+  font-size: 14px;
   border: red 1px solid;
   border-radius: 7px;
   padding: 5px;
   text-align: center;
+  height: 30px;
+  width: 70px;
 }
+.section4 {
+  align-items: center;
+  margin:10% 20%
+}
+.inicial-pedido {
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+table {
+  border-collapse: collapse;
+  width: 80%;
+}
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th {
+  background-color: #ffd52c;
+  color: white;
+}
+table tr:hover {
+  background-color: #f0c4167a;
+}
+.numero-productos {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  color: #000;
+}
+.formulario{
+  width: 80%;
+}
+
 </style>
