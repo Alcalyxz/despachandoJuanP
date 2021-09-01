@@ -12,15 +12,15 @@
           <form action="/action_page.php" class="formulario">
             <h3 class="resumen">Resumen del pedido</h3>
             <label for="fname">Nombre:</label><br />
-            <input type="email" id="fname" name="fname" value="" /><br />
+            <input v-model="nombre" type="email" id="fname" name="fname" value="" /><br />
             <label for="fname">Apellido:</label><br />
-            <input type="email" id="fname" name="fname" value="" /><br />
+            <input v-model="apellido" type="email" id="fname" name="fname" value="" /><br />
             <label for="fname">Dirección:</label><br />
-            <input type="email" id="fname" name="fname" value="" /><br />
+            <input v-model="direccion" type="email" id="fname" name="fname" value="" /><br />
             <label for="fname">Barrio:</label><br />
-            <input type="email" id="fname" name="fname" value="" /><br />
+            <input v-model="barrio" type="email" id="fname" name="fname" value="" /><br />
             <label for="fname">Método de pago:</label><br />
-            <input type="email" id="fname" name="fname" value="" /><br />
+            <input v-model="pago" type="email" id="fname" name="fname" value="" /><br />
           </form>
           <table id="customers">
             <tr>
@@ -33,20 +33,10 @@
               <th>Cantidad</th>
               <th>Precio</th>
             </tr>
-            <tr>
-              <td>hamburguesa</td>
-              <td>2</td>
-              <td>$14.500</td>
-            </tr>
-            <tr>
-              <td>hamburguesa</td>
-              <td>2</td>
-              <td>$14.500</td>
-            </tr>
-            <tr>
-              <td>hamburguesa</td>
-              <td>2</td>
-              <td>$14.500</td>
+            <tr v-for="ped in pedido" v-bind:key="ped.index">
+              <td>{{ped.nombreProducto}}</td>
+              <td>{{ped.cantidad}}</td>
+              <td>${{ped.precio}}</td>
             </tr>
           </table>
 <div class="">
@@ -170,6 +160,11 @@ export default {
     pedido: [],
     cantidad: 0,
     openCart: false,
+    nombre: '',
+    apellido: '',
+    barrio: '',
+    pago: '',
+    direccion: ''
   }),
 
   methods: {
@@ -196,7 +191,7 @@ export default {
 
     for (var i = 0; i < this.cartas.length; i++) {
       for (var j = 0; j < this.cartas[i].products.length; j++) {
-        this.cartas[i].products[j].cantidad = 0;
+        this.cartas[i].products[j].cantidad = 1;
       }
     }
   },
