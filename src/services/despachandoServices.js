@@ -229,4 +229,30 @@ export default {
     });
 
   },
+
+  async crearPedido(pedido) {
+    await axios.post('https://despachando.herokuapp.com/addFullOrder', JSON.stringify(pedido), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(async response => {
+      console.log(response)
+    }).catch(e => {
+      console.log(e)
+    });
+
+  },
+
+  async getPedidos(nit) {
+    let restaurante = {
+      nit
+    }
+    return axios.post('https://despachando.herokuapp.com/getOrder', JSON.stringify(restaurante), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+  },
+
 }

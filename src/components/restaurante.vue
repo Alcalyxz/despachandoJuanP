@@ -13,8 +13,8 @@
             <h3 class="resumen">Resumen del pedido</h3>
             <label for="fname">Nombre:</label><br />
             <input v-model="nombre" type="email" id="fname" name="fname" value="" /><br />
-            <label for="fname">Apellido:</label><br />
-            <input v-model="apellido" type="email" id="fname" name="fname" value="" /><br />
+            <label for="fname">Celular:</label><br />
+            <input v-model="celular" type="email" id="fname" name="fname" value="" /><br />
             <label for="fname">Dirección:</label><br />
             <input v-model="direccion" type="email" id="fname" name="fname" value="" /><br />
             <label for="fname">Barrio:</label><br />
@@ -39,10 +39,12 @@
               <td>${{ped.precio}}</td>
             </tr>
           </table>
+          <h1>TOTAL:</h1>
+          <h2>{{total}}</h2>
 <div class="">
 
-          <button class="boton-finalizar">Cancelar compra</button>
-          <button class="boton-pagar">Finalizar compra</button>
+          <button @click="closeWindowCart()" class="boton-finalizar">Cancelar compra</button>
+          <button @click="crearPedido()" class="boton-pagar">Finalizar compra</button>
   
 </div>
         </div>
@@ -73,13 +75,24 @@
               </v-btn>
             </v-bottom-navigation>
           </div>
+
+          <div class="overflow-hidden">
+            <v-bottom-navigation>
+              <v-btn @click="goToAllPedidos">
+                <img width="40px" src="../assets/images/pedidos.png" alt="" />
+              </v-btn>
+            </v-bottom-navigation>
+          </div>
+
+
           <div>
             <p class="numero-productos">{{ cantidad }}</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="search_bar">
+
+    <!-- <div class="search_bar">
       <form action="">
         <img src="../assets/images/search_icon.png" alt="" />
         <input
@@ -88,7 +101,7 @@
           placeholder="Buscar producto"
         />
       </form>
-    </div>
+    </div> -->
     <div v-for="carta in cartas" :key="carta.index">
       <h3>{{ carta.name }}</h3>
       <!--CARD -->
@@ -149,7 +162,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-//import services from "../services/despachandoServices";
+import services from "../services/despachandoServices";
 
 export default {
   name: "restaurante",
@@ -161,10 +174,11 @@ export default {
     cantidad: 0,
     openCart: false,
     nombre: '',
-    apellido: '',
     barrio: '',
     pago: '',
-    direccion: ''
+    direccion: '',
+    celular: '',
+    total: 0
   }),
 
   methods: {
@@ -172,10 +186,11 @@ export default {
     addCarrito(id, precio, name, cantidad) {
       let producto = {
         idproducto: id,
-        precio: precio,
+        precio: precio*cantidad,
         nombreProducto: name,
         cantidad: cantidad,
       };
+      this.total = this.total + precio*cantidad;
       this.pedido.push(producto);
       console.log(this.pedido);
       this.cantidad++;
@@ -183,17 +198,66 @@ export default {
     openWindowCart() {
       this.openCart = !this.openCart;
     },
+    closeWindowCart(){
+      this.openCart = !this.openCart;
+      this.pedido= []
+      this.nombre=''
+      this.pago=''
+      this.direccion=''
+      this.barrio=''
+      this.celular=''
+      this.cantidad=0
+      this.total=0
+      this.openWindowCart()
+      this.openCart = !this.openCart;
+      this.resetCantidadesProductos()
+
+    },
+    resetCantidadesProductos(){
+      for (var i = 0; i < this.cartas.length; i++) {
+      for (var j = 0; j < this.cartas[i].products.length; j++) {
+        this.cartas[i].products[j].cantidad = 1;
+      }
+    }
+
+    },
+    async crearPedido(){
+      let cliente = {
+        nombre: this.nombre,
+        celular: this.celular,
+        pago: this.pago,
+        barrio: this.pago,
+        direccion: this.direccion,
+        id: parseInt(this.celular)
+      }
+
+      let pedido = {
+        pedidos: this.pedido,
+        cliente
+      }
+
+      await services.crearPedido(pedido);
+      this.pedido= []
+      this.nombre=''
+      this.pago=''
+      this.direccion=''
+      this.barrio=''
+      this.celular=''
+      this.cantidad=0
+      this.total=0
+      this.openWindowCart()
+      this.resetCantidadesProductos()
+    },
+    goToAllPedidos(){
+      this.$router.push("/listaPedidos").catch(() => {});
+    }
   },
 
   mounted() {
     this.restaurante = this.$store.state.restauranteActual;
     this.cartas = this.$store.state.cartaActual;
 
-    for (var i = 0; i < this.cartas.length; i++) {
-      for (var j = 0; j < this.cartas[i].products.length; j++) {
-        this.cartas[i].products[j].cantidad = 1;
-      }
-    }
+    this.resetCantidadesProductos();
   },
   created() {
     this.nit = this.$store.state.restauranteActual.nit;

@@ -10,6 +10,7 @@ import menus from "./components/menus"
 import puenteproductos from "./components/puenteproductos"
 import crearpedido from "./components/crearPedido"
 import restaurante from "./components/restaurante"
+import listaPedidos from "./components/listaPedidos"
 
 
 export const routes = [
@@ -25,6 +26,7 @@ export const routes = [
     {path: '/menus', component:menus},
     {path: '/puenteproductos', component:puenteproductos},
     {path: '/crearpedido', component:crearpedido},
-    {path: '/restaurante', component:restaurante}
+    {path: '/restaurante', component:restaurante},
+    {path: '/listaPedidos', component:listaPedidos},
     
 ]
