@@ -1,27 +1,40 @@
 <template>
   <div>
-    <h1>Lista de Pedidos</h1>
 
-    <table id="customers">
-            <tr>
-              <th class="inicial-pedido" COLSPAN="3">
-                Tu pedido
-              </th>
-            </tr>
-            <tr>
-              <th>Nombre Cliente</th>
-              <th>Id Pedido</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-            </tr>
-            <tr v-for="ped in pedidos" v-bind:key="ped.index">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </table>
+    <div v-for="pedido in pedidos" :key="pedido.index">
+      <table>
+        <thead>
+
+          <tr>
+            <th COLSPAN="4">
+              #Pedido: {{ pedido.id_pedido }}
+            </th>
+            <th COLSPAN="4">
+              CLIENTE: {{ pedido.cliente_nombre }}
+            </th>
+            <th COLSPAN="4">
+              PRECIO: ${{ pedido.precio }}
+            </th>
+          </tr>
+
+
+          <tr>
+            <th>Cantidad</th>
+            <th>Nombre Producto</th>
+          </tr>
+          
+          
+        </thead>
+        <tbody>
+          <tr v-for="producto in pedido.productos" :key="producto.name">
+            <td>{{ producto.cantidad_producto }}</td>
+            <td>{{ producto.nombre_producto }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    
   </div>
 </template>
 
@@ -39,7 +52,7 @@ export default {
       await services
         .getPedidos(nit.toString())
         .then((response) => {
-          this.pedidos = response.data.status;
+          this.pedidos = response.data.result;
         })
         .catch((e) => {
           console.log(e);

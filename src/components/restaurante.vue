@@ -140,7 +140,7 @@
                                 item.idproducto,
                                 item.price,
                                 item.name,
-                                item.cantidad
+                                parseInt(item.cantidad)
                               )
                             "
                           >
@@ -224,7 +224,7 @@ export default {
     async crearPedido(){
       let cliente = {
         nombre: this.nombre,
-        celular: this.celular,
+        celular: parseInt(this.celular),
         pago: this.pago,
         barrio: this.pago,
         direccion: this.direccion,
@@ -235,6 +235,9 @@ export default {
         pedidos: this.pedido,
         cliente
       }
+
+      console.log(pedido)
+
 
       await services.crearPedido(pedido);
       this.pedido= []
@@ -261,7 +264,6 @@ export default {
   },
   created() {
     this.nit = this.$store.state.restauranteActual.nit;
-
     this.obtenerMenu();
   },
   computed: {
