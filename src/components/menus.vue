@@ -453,7 +453,7 @@ tr:nth-child(even) {
 }
  th:nth-child(1){
   
-  background-color: black;
+  background-color: #f0c416;
 }
 th {
   color: white;
