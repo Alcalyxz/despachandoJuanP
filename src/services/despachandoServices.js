@@ -254,5 +254,20 @@ export default {
     })
 
   },
+  
+  async updateOrder(id_pedido) {
+    let pedido = {
+      id_pedido
+    }
+    await axios.put('https://despachando.herokuapp.com/updateOrder', JSON.stringify(pedido), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(async response => {
+      console.log(response)
+    }).catch(e => {
+      console.log(e)
+    });
 
+  },
 }
